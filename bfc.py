@@ -18,6 +18,10 @@ int main() {
             c_code += "\tputchar(*ptr);\n"
         elif cmd == ',':
             c_code += "*ptr = getchar();\n"
+        elif cmd == "[":
+            c_code += "while (*ptr) {\n"
+        elif cmd == "]":
+            c_code += "}\n"
 
     c_code += """
     return 0;
@@ -26,4 +30,4 @@ int main() {
     with open(out, 'w') as f:
         f.write(c_code)
 
-bf_to_c(',.,.')
+bf_to_c('++++++++++[>+++++++>++++++++++>+++>+<<<<-]>++.>+.+++++++..+++.>++.<<+++++++++++++++.>.+++.------.--------.>+.>.')
