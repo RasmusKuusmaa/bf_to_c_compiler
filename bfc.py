@@ -1,5 +1,6 @@
 import subprocess
 import os
+import argparse
 def bf_to_c(bf_code, out='output.c'):
     c_code = """#include <stdio.h>
 int main() {
@@ -45,6 +46,9 @@ def compile_bf_file(bf_file):
         print(stderr.decode())
         return
     
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser()
+    parser.add_argument("file", help="Path to the .bf file")
+    args = parser.parse_args()
 
-
-compile_bf_file('./helloworld.bf')
+    compile_bf_file(args.file)
