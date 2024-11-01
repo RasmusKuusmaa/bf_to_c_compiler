@@ -1,3 +1,5 @@
+import subprocess
+
 def bf_to_c(bf_code, out='output.c'):
     c_code = """#include <stdio.h>
 int main() {
@@ -27,7 +29,20 @@ int main() {
     return 0;
 }
 """
-    with open(out, 'w') as f:
-        f.write(c_code)
+    return c_code
 
-bf_to_c('++++++++++[>+++++++>++++++++++>+++>+<<<<-]>++.>+.+++++++..+++.>++.<<+++++++++++++++.>.+++.------.--------.>+.>.')
+
+def compile_bf_file(bf_code):
+    c_code = bf_to_c(bf_code)
+    gcc_command = ["gcc", "-x", "c", "-o", "program_name", "-"]
+    process = subprocess.Popen(gcc_command, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    stdout, stderr = process.communicate(input=c_code.encode())
+    if process.returncode != 0:
+        print('Compilation failed:')
+        print(stderr.decode())
+        return
+    
+
+
+bf_code = '++++++++++[>+++++++>++++++++++>+++>+<<<<-]>++.>+.+++++++..+++.>++.<<+++++++++++++++.>.+++.------.--------.>+.>.'
+compile_bf_file(bf_code)
