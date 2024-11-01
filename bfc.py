@@ -32,9 +32,11 @@ int main() {
     return c_code
 
 
-def compile_bf_file(bf_code):
+def compile_bf_file(bf_file):
+    with open(bf_file, 'r') as file:
+        bf_code = file.read()
     c_code = bf_to_c(bf_code)
-    gcc_command = ["gcc", "-x", "c", "-o", "program_name", "-"]
+    gcc_command = ["gcc", "-x", "c", "-o", "filename", "-"]
     process = subprocess.Popen(gcc_command, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     stdout, stderr = process.communicate(input=c_code.encode())
     if process.returncode != 0:
@@ -44,5 +46,4 @@ def compile_bf_file(bf_code):
     
 
 
-bf_code = '++++++++++[>+++++++>++++++++++>+++>+<<<<-]>++.>+.+++++++..+++.>++.<<+++++++++++++++.>.+++.------.--------.>+.>.'
-compile_bf_file(bf_code)
+compile_bf_file('./helloworld.bf')
